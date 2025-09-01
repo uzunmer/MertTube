@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Platform Name</title>
+</head>
+<body>
+  <h1>Welcome to Your Platform</h1>
+  <div id="videos"></div>
+
+  <script>
+    fetch('videos.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('videos');
+        data.forEach(video => {
+          const el = document.createElement('div');
+          el.innerHTML = `
+            <h2>${video.title}</h2>
+            <p>${video.description}</p>
+            <video width="480" controls>
+              <source src="${video.video_url}" type="video/mp4">
+            </video>
+            <hr>
+          `;
+          container.appendChild(el);
+        });
+      });
+  </script>
+</body>
+</html>
