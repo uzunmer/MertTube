@@ -19,14 +19,15 @@
     </nav>
   </header>
 
-  <h1>Welcome to MertTube</h1>
+  <div class="page-container">
+    <h1>Welcome to MertTube</h1>
+    <div class="ads">Ad Placeholder</div>
 
-  <div class="ads">Ad Placeholder</div>
+    <h3>All Videos</h3>
+    <div id="videos"></div>
 
-  <h3>All Videos</h3>
-  <div id="videos"></div>
-
-  <div class="ads">Ad Placeholder</div>
+    <div class="ads">Ad Placeholder</div>
+  </div>
 
   <script>
     const firebaseConfig = {
@@ -50,7 +51,7 @@
           el.innerHTML = `
             <h2>${video.title}</h2>
             <p>${video.description}</p>
-            <video width="640" controls>
+            <video width="100%" controls>
               <source src="${video.video_url}" type="video/mp4">
             </video>
             <hr>
