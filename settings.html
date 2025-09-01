@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Settings - MertTube</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div><strong>Settings</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Merts.html">Merts</a>
+      <a href="upload.html">Upload</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <h1>Settings</h1>
+
+  <div>
+    <label>
+      <input type="checkbox" id="darkModeToggle"> Dark Mode
+    </label>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('darkModeToggle');
+
+    // Load saved preference
+    if(localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', () => {
+      if(toggle.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode','true');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode','false');
+      }
+    });
+  </script>
+</body>
+</html>
