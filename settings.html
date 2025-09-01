@@ -38,7 +38,7 @@
     // Load saved preference
     let saved = localStorage.getItem('darkMode');
     if(saved === null) {
-      // No manual override, follow system
+      // Follow system preference
       if(prefersDark) document.body.classList.add('dark-mode');
     } else if(saved === 'true') {
       document.body.classList.add('dark-mode');
