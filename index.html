@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Platform Name</title>
+  <title>MertTube Final</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; }
+    .video-card { margin-bottom: 30px; }
+    h1 { text-align: center; }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Your Platform</h1>
+  <h1>Welcome to MertTube</h1>
   <div id="videos"></div>
 
   <script>
-    fetch("videos.json")
+    fetch('videos.json')
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById('videos');
         data.forEach(video => {
           const el = document.createElement('div');
+          el.className = "video-card";
           el.innerHTML = `
             <h2>${video.title}</h2>
             <p>${video.description}</p>
-            <video width="480" controls>
+            <video width="640" controls>
               <source src="${video.video_url}" type="video/mp4">
             </video>
             <hr>
