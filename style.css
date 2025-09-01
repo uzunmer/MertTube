@@ -1,4 +1,4 @@
-/* General body */
+/* Base light theme */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,13 +6,27 @@ body {
   background: #f4f4f4;
   color: #333;
   transition: background 0.3s, color 0.3s;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
-/* Dark mode */
+/* Detect system dark preference */
+@media (prefers-color-scheme: dark) {
+  body:not(.light-mode):not(.dark-mode) {
+    background: #121212;
+    color: #fff;
+  }
+}
+
+/* Manual dark mode */
 body.dark-mode {
   background: #121212;
   color: #fff;
+}
+
+/* Manual light mode */
+body.light-mode {
+  background: #f4f4f4;
+  color: #333;
 }
 
 /* Header */
@@ -45,7 +59,8 @@ header nav a {
   border-radius: 10px;
   box-sizing: border-box;
 }
-body.dark-mode .page-container {
+body.dark-mode .page-container,
+body:not(.light-mode):not(.dark-mode) .page-container {
   background: rgba(0,0,0,0.6);
 }
 
@@ -58,10 +73,8 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-body.dark-mode input[type="text"],
-body.dark-mode input[type="email"],
-body.dark-mode input[type="password"],
-body.dark-mode textarea {
+body.dark-mode input,
+body:not(.light-mode):not(.dark-mode) input {
   background: #333;
   color: white;
   border: 1px solid #555;
@@ -88,7 +101,8 @@ button:hover {
   border-radius: 10px;
   box-sizing: border-box;
 }
-body.dark-mode .video-card {
+body.dark-mode .video-card,
+body:not(.light-mode):not(.dark-mode) .video-card {
   background: #1e1e1e;
 }
 
@@ -100,7 +114,8 @@ body.dark-mode .video-card {
   margin: 10px 0;
   border-radius: 8px;
 }
-body.dark-mode .ads {
+body.dark-mode .ads,
+body:not(.light-mode):not(.dark-mode) .ads {
   background: #333;
 }
 
