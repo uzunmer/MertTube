@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>MertTube</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <header>
@@ -19,46 +17,34 @@
     </nav>
   </header>
 
-  <div class="page-container">
-    <h1>Welcome to MertTube</h1>
-    <div class="ads">Ad Placeholder</div>
-
-    <h3>All Videos</h3>
-    <div id="videos"></div>
-
-    <div class="ads">Ad Placeholder</div>
-  </div>
+  <div class="page-container" id="videos"></div>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
-      authDomain: "merttube-46b68.firebaseapp.com",
-      projectId: "merttube-46b68",
-      storageBucket: "merttube-46b68.appspot.com",
-      messagingSenderId: "274195761415",
-      appId: "1:274195761415:web:PUT_YOUR_WEB_APP_ID_HERE"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const videosContainer = document.getElementById('videos');
+    const savedTheme = localStorage.getItem('themeMode');
+    if(savedTheme){
+      document.body.classList.remove('light-mode','dark-mode');
+      if(savedTheme==='light') document.body.classList.add('light-mode');
+      if(savedTheme==='dark') document.body.classList.add('dark-mode');
+    }
 
-    db.collection("videos").where("is_short", "==", false).orderBy("upload_time", "desc").get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          const video = doc.data();
+    fetch('videos.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('videos');
+        data.forEach(video => {
           const el = document.createElement('div');
-          el.className = "video-card";
+          el.classList.add('video-card');
           el.innerHTML = `
             <h2>${video.title}</h2>
             <p>${video.description}</p>
-            <video width="100%" controls>
+            <video width="480" controls>
               <source src="${video.video_url}" type="video/mp4">
             </video>
             <hr>
           `;
-          videosContainer.appendChild(el);
+          container.appendChild(el);
         });
-      }).catch(err => console.error(err));
+      });
   </script>
 </body>
 </html>
