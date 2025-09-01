@@ -8,20 +8,19 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-
   <header>
     <div><strong>Merts</strong></div>
     <nav>
       <a href="index.html">Home</a>
       <a href="upload.html">Upload</a>
       <a href="login.html">Login</a>
+      <a href="settings.html">Settings</a>
     </nav>
   </header>
 
   <div class="merts-container" id="mertsContainer"></div>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
       authDomain: "merttube-46b68.firebaseapp.com",
@@ -32,7 +31,6 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-
     const container = document.getElementById('mertsContainer');
 
     db.collection("videos").where("is_short", "==", true).orderBy("upload_time", "desc").get()
@@ -50,8 +48,7 @@
           `;
           container.appendChild(el);
         });
-      })
-      .catch(err => console.error(err));
+      }).catch(err => console.error(err));
   </script>
 </body>
 </html>
