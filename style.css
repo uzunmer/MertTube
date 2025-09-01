@@ -9,7 +9,7 @@ body {
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Manual dark mode */
+/* Dark mode */
 body.dark-mode {
   background: #121212;
   color: #fff;
@@ -36,7 +36,7 @@ header nav a {
   margin-left: 15px;
 }
 
-/* Container for forms/pages */
+/* Container for pages/forms */
 .page-container {
   max-width: 600px;
   margin: 80px auto 20px auto;
