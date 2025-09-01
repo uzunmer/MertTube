@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Video - MertTube</title>
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: auto; background: #f4f4f4; padding: 20px; }
+    input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h1>Upload Video</h1>
+  <form id="uploadForm">
+    <input type="text" id="title" placeholder="Video Title" required>
+    <textarea id="description" placeholder="Video Description" rows="4" required></textarea>
+    <input type="url" id="video_url" placeholder="Direct Video URL" required>
+    <input type="checkbox" id="short"> Short Video (<2 min)<br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="message"></div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const video = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        video_url: document.getElementById('video_url').value,
+        upload_time: new Date().toISOString(),
+        short: document.getElementById('short').checked
+      };
+      document.getElementById('message').innerText = 
+        "Copy this JSON and add to videos.json:\n" + JSON.stringify(video, null, 2);
+    });
+  </script>
+</body>
+</html>
