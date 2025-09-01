@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>MertTube</title>
-  <style>
-    body { font-family: Arial; max-width: 900px; margin: auto; background: #f4f4f4; padding: 20px; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    nav a { margin-left: 15px; text-decoration: none; color: #333; font-weight: bold; }
-    .ads { background: #ddd; text-align: center; padding: 10px; margin: 10px 0; border-radius: 8px; }
-    .shorts { display: flex; overflow-x: auto; margin-bottom: 20px; }
-    .short-card { min-width: 200px; margin-right: 10px; background: white; padding: 10px; border-radius: 8px; }
-    .video-card { background: white; padding: 15px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-  </style>
-
-  <!-- Firebase scripts -->
+  <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
   <header>
     <div><strong>MertTube</strong></div>
     <nav>
       <a href="index.html">Home</a>
+      <a href="merts.html">Merts</a>
       <a href="upload.html">Upload</a>
       <a href="login.html">Login</a>
     </nav>
@@ -30,9 +21,6 @@
   <h1>Welcome to MertTube</h1>
 
   <div class="ads">Ad Placeholder</div>
-
-  <h3>Shorts</h3>
-  <div class="shorts" id="shorts"></div>
 
   <h3>All Videos</h3>
   <div id="videos"></div>
@@ -52,14 +40,11 @@
     const db = firebase.firestore();
 
     const videosContainer = document.getElementById('videos');
-    const shortsContainer = document.getElementById('shorts');
 
-    db.collection("videos").orderBy("upload_time", "desc").get()
+    db.collection("videos").where("is_short", "==", false).orderBy("upload_time", "desc").get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           const video = doc.data();
-
-          // All videos
           const el = document.createElement('div');
           el.className = "video-card";
           el.innerHTML = `
@@ -71,19 +56,6 @@
             <hr>
           `;
           videosContainer.appendChild(el);
-
-          // Shorts
-          if(video.short){
-            const shortEl = document.createElement('div');
-            shortEl.className = "short-card";
-            shortEl.innerHTML = `
-              <h4>${video.title}</h4>
-              <video width="200" controls>
-                <source src="${video.video_url}" type="video/mp4">
-              </video>
-            `;
-            shortsContainer.appendChild(shortEl);
-          }
         });
       })
       .catch(err => console.error(err));
