@@ -1,23 +1,20 @@
-/* General light theme */
+/* General body */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0 20px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0;
   background: #f4f4f4;
   color: #333;
   transition: background 0.3s, color 0.3s;
 }
 
-/* Dark theme */
+/* Dark theme by device preference */
 @media (prefers-color-scheme: dark) {
   body {
     background: #000;
     color: #fff;
   }
-  .video-card {
+  .video-card, .page-container {
     background: #111;
     color: white;
   }
@@ -25,15 +22,15 @@ body {
 
 /* Manual dark mode */
 body.dark-mode {
-  background: black;
+  background: #000;
   color: white;
 }
-body.dark-mode .video-card {
+body.dark-mode .video-card, body.dark-mode .page-container {
   background: #111;
   color: white;
 }
 
-/* Header / Navigation */
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -50,6 +47,37 @@ header a {
   text-decoration: none;
   font-weight: bold;
   margin-left: 15px;
+}
+
+/* Page container for forms and settings */
+.page-container {
+  max-width: 600px;
+  margin: 80px auto 20px auto; /* leave space for header */
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Inputs/buttons */
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #2196F3;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #1976D2;
 }
 
 /* Ads placeholder */
@@ -70,14 +98,14 @@ header a {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Merts container */
+/* Merts (shorts) container */
 .merts-container {
   display: flex;
   flex-direction: column;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   height: 100vh;
-  margin-top: 50px; /* space for header */
+  margin-top: 50px;
 }
 .merts-card {
   position: relative;
