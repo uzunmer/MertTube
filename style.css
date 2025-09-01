@@ -1,4 +1,4 @@
-/* Base light theme */
+/* Base styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -9,7 +9,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Detect system dark preference */
+/* System dark preference */
 @media (prefers-color-scheme: dark) {
   body:not(.light-mode):not(.dark-mode) {
     background: #121212;
@@ -17,13 +17,11 @@ body {
   }
 }
 
-/* Manual dark mode */
+/* Manual dark/light mode */
 body.dark-mode {
   background: #121212;
   color: #fff;
 }
-
-/* Manual light mode */
 body.light-mode {
   background: #f4f4f4;
   color: #333;
@@ -50,10 +48,10 @@ header nav a {
   margin-left: 15px;
 }
 
-/* Container for pages/forms */
+/* Container */
 .page-container {
   max-width: 600px;
-  margin: 80px auto 20px auto;
+  margin: 100px auto 20px auto;
   padding: 20px;
   background: rgba(255,255,255,0.9);
   border-radius: 10px;
@@ -69,9 +67,9 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
-  box-sizing: border-box;
   border-radius: 5px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 body.dark-mode input,
 body:not(.light-mode):not(.dark-mode) input {
@@ -79,7 +77,6 @@ body:not(.light-mode):not(.dark-mode) input {
   color: white;
   border: 1px solid #555;
 }
-
 button {
   padding: 10px 20px;
   border-radius: 5px;
@@ -99,7 +96,6 @@ button:hover {
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 10px;
-  box-sizing: border-box;
 }
 body.dark-mode .video-card,
 body:not(.light-mode):not(.dark-mode) .video-card {
@@ -146,7 +142,7 @@ body:not(.light-mode):not(.dark-mode) .ads {
   text-shadow: 1px 1px 5px black;
 }
 
-/* Theme switch container */
+/* Theme switch */
 .theme-switch {
   margin-top: 15px;
 }
