@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Upload Video - MertTube</title>
-  <style>
-    body { font-family: Arial; max-width: 600px; margin: auto; background: #f4f4f4; padding: 20px; }
-    input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; }
-    button { padding: 10px 20px; }
-  </style>
+  <title>Upload - MertTube</title>
 </head>
 <body>
-  <h1>Upload Video</h1>
+  <h1>Upload a Video</h1>
   <form id="uploadForm">
-    <input type="text" id="title" placeholder="Video Title" required>
-    <textarea id="description" placeholder="Video Description" rows="4" required></textarea>
-    <input type="url" id="video_url" placeholder="Direct Video URL" required>
-    <input type="checkbox" id="short"> Short Video (<2 min)<br><br>
-    <button type="submit">Submit</button>
+    <input type="text" id="title" placeholder="Video Title" required><br><br>
+    <textarea id="description" placeholder="Description"></textarea><br><br>
+    <input type="text" id="video_url" placeholder="Video URL (MP4)" required><br><br>
+    <label>Short? <input type="checkbox" id="short"></label><br><br>
+    <button type="submit">Upload</button>
   </form>
-  <div id="message"></div>
+
+  <p id="message"></p>
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
+      authDomain: "merttube-46b68.firebaseapp.com",
+      projectId: "merttube-46b68",
+      storageBucket: "merttube-46b68.appspot.com",
+      messagingSenderId: "274195761415",
+      appId: "1:274195761415:web:PUT_YOUR_WEB_APP_ID_HERE"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     const form = document.getElementById('uploadForm');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
+
       const video = {
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
         video_url: document.getElementById('video_url').value,
-        upload_time: new Date().toISOString(),
+        upload_time: new Date(), // current timestamp
         short: document.getElementById('short').checked
       };
-      document.getElementById('message').innerText = 
-        "Copy this JSON and add to videos.json:\n" + JSON.stringify(video, null, 2);
+
+      db.collection("videos").add(video)
+        .then(() => {
+          document.getElementById('message').innerText = "Video uploaded successfully!";
+          form.reset();
+        })
+        .catch(err => console.error(err));
     });
   </script>
 </body>
