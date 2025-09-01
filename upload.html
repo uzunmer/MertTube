@@ -9,6 +9,16 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <header>
+    <div><strong>Upload</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Merts.html">Merts</a>
+      <a href="login.html">Login</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </header>
+
   <h1>Upload a Video</h1>
   <form id="uploadForm">
     <input type="text" id="title" placeholder="Video Title" required><br><br>
@@ -34,3 +44,23 @@
 
     const form = document.getElementById('uploadForm');
     form.addEventListener('submit', e => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const video_url = document.getElementById('video_url').value;
+      const is_short = document.getElementById('is_short').checked;
+
+      db.collection("videos").add({
+        title,
+        description,
+        video_url,
+        is_short,
+        upload_time: new Date()
+      }).then(() => {
+        document.getElementById('message').innerText = "Uploaded!";
+        form.reset();
+      }).catch(err => console.error(err));
+    });
+  </script>
+</body>
+</html>
