@@ -1,13 +1,13 @@
 /* General body */
-body {
+body, html {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 20px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #f4f4f4;
-  color: #333;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  background: black;
+  color: white;
 }
 
 /* Header / Navigation */
@@ -15,79 +15,43 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
 }
-nav a {
-  margin-left: 15px;
+header a {
+  color: white;
   text-decoration: none;
-  color: #333;
   font-weight: bold;
+  margin-left: 15px;
 }
 
-/* Ads placeholder */
-.ads {
-  background: #ddd;
-  text-align: center;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-}
-
-/* All Videos feed */
-.video-card {
-  background: white;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Shorts (Merts) */
-.short-container {
+/* Merts container */
+.merts-container {
   display: flex;
   flex-direction: column;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   height: 100vh;
-  margin: 0;
-  padding: 0;
+  margin-top: 50px; /* leave space for header */
 }
-.short-card {
+.merts-card {
   position: relative;
   width: 100vw;
   height: 100vh;
   scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: black;
 }
-.short-card video {
+.merts-card video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.short-card .info {
+.merts-card .info {
   position: absolute;
   bottom: 30px;
   left: 20px;
-  color: white;
   text-shadow: 1px 1px 5px black;
-}
-
-/* Fixed nav for Merts page */
-.merts-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.5);
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 10;
-}
-.merts-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
 }
