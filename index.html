@@ -44,14 +44,14 @@
   <div class="ads">Ad Placeholder</div>
 
   <script>
-    // Firebase config
+    // Firebase config with your project info
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
+      authDomain: "merttube-46b68.firebaseapp.com",
+      projectId: "merttube-46b68",
+      storageBucket: "merttube-46b68.appspot.com",
+      messagingSenderId: "274195761415",
+      appId: "1:274195761415:web:PUT_YOUR_WEB_APP_ID_HERE"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -78,7 +78,7 @@
           `;
           videosContainer.appendChild(el);
 
-          // Optionally add to Shorts section
+          // Add to Shorts section if short: true
           if(video.short){
             const shortEl = document.createElement('div');
             shortEl.className = "short-card";
