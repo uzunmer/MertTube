@@ -9,15 +9,19 @@
 </head>
 <body>
 
-  <div class="merts-nav">
-    <a href="index.html">Home</a>
-    <strong>Merts</strong>
-    <a href="upload.html">Upload</a>
-  </div>
+  <header>
+    <div><strong>Merts</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upload.html">Upload</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
 
-  <div class="short-container" id="shortsContainer"></div>
+  <div class="merts-container" id="mertsContainer"></div>
 
   <script>
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
       authDomain: "merttube-46b68.firebaseapp.com",
@@ -29,22 +33,22 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const shortsContainer = document.getElementById('shortsContainer');
+    const container = document.getElementById('mertsContainer');
 
     db.collection("videos").where("is_short", "==", true).orderBy("upload_time", "desc").get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           const video = doc.data();
           const el = document.createElement('div');
-          el.className = "short-card";
+          el.className = "merts-card";
           el.innerHTML = `
             <video src="${video.video_url}" controls autoplay muted loop></video>
             <div class="info">
-              <h4>${video.title}</h4>
+              <h3>${video.title}</h3>
               <p>${video.description}</p>
             </div>
           `;
-          shortsContainer.appendChild(el);
+          container.appendChild(el);
         });
       })
       .catch(err => console.error(err));
