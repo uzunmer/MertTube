@@ -21,41 +21,52 @@
 
     <div class="theme-switch">
       <label>
-        <input type="checkbox" id="darkModeToggle">
+        <input type="radio" name="theme" value="system" checked>
+        System Default
+      </label><br>
+      <label>
+        <input type="radio" name="theme" value="light">
+        Light Mode
+      </label><br>
+      <label>
+        <input type="radio" name="theme" value="dark">
         Dark Mode
       </label>
-      <p id="systemPrefMsg">Using system preference by default</p>
+      <p id="themeMsg">Currently using system default</p>
     </div>
   </div>
 
   <script>
-    const toggle = document.getElementById('darkModeToggle');
-    const msg = document.getElementById('systemPrefMsg');
+    const themeRadios = document.querySelectorAll('input[name="theme"]');
+    const themeMsg = document.getElementById('themeMsg');
 
     // Detect system preference
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     // Load saved preference
-    let saved = localStorage.getItem('darkMode');
-    if(saved === null) {
-      // Follow system preference
-      if(prefersDark) document.body.classList.add('dark-mode');
-    } else if(saved === 'true') {
-      document.body.classList.add('dark-mode');
-      toggle.checked = true;
-      msg.innerText = "Manual override enabled";
+    let saved = localStorage.getItem('themeMode') || 'system';
+
+    function applyTheme(mode) {
+      document.body.classList.remove('dark-mode');
+      if(mode === 'system') {
+        if(prefersDark) document.body.classList.add('dark-mode');
+        themeMsg.innerText = "Currently using system default";
+      } else if(mode === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeMsg.innerText = "Dark mode enabled";
+      } else if(mode === 'light') {
+        themeMsg.innerText = "Light mode enabled";
+      }
+      localStorage.setItem('themeMode', mode);
     }
 
-    toggle.addEventListener('change', () => {
-      if(toggle.checked) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode','true');
-        msg.innerText = "Manual override enabled";
-      } else {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode','false');
-        msg.innerText = "Manual override disabled (using system preference)";
-      }
+    // Apply saved theme
+    applyTheme(saved);
+    themeRadios.forEach(radio => {
+      if(radio.value === saved) radio.checked = true;
+      radio.addEventListener('change', () => {
+        applyTheme(radio.value);
+      });
     });
   </script>
 </body>
