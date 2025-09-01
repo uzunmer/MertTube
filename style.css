@@ -9,11 +9,7 @@ body {
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Dark theme by device preference */
-body:not(.dark-mode) {
-  background: #f4f4f4;
-  color: #333;
-}
+/* Manual dark mode */
 body.dark-mode {
   background: #121212;
   color: #fff;
@@ -135,7 +131,7 @@ body.dark-mode .ads {
   text-shadow: 1px 1px 5px black;
 }
 
-/* Dark/Light/System switch container */
+/* Theme switch container */
 .theme-switch {
   margin-top: 15px;
 }
