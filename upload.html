@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Upload - MertTube</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
   <h1>Upload a Video</h1>
@@ -9,16 +14,11 @@
     <input type="text" id="title" placeholder="Video Title" required><br><br>
     <textarea id="description" placeholder="Description"></textarea><br><br>
     <input type="text" id="video_url" placeholder="Video URL (MP4)" required><br><br>
-    <label>Short? <input type="checkbox" id="short"></label><br><br>
+    <label>Is this a Mert? (Short) <input type="checkbox" id="is_short"></label><br><br>
     <button type="submit">Upload</button>
   </form>
 
   <p id="message"></p>
-
-  <!-- Firebase scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -34,23 +34,3 @@
 
     const form = document.getElementById('uploadForm');
     form.addEventListener('submit', e => {
-      e.preventDefault();
-
-      const video = {
-        title: document.getElementById('title').value,
-        description: document.getElementById('description').value,
-        video_url: document.getElementById('video_url').value,
-        upload_time: new Date(), // current timestamp
-        short: document.getElementById('short').checked
-      };
-
-      db.collection("videos").add(video)
-        .then(() => {
-          document.getElementById('message').innerText = "Video uploaded successfully!";
-          form.reset();
-        })
-        .catch(err => console.error(err));
-    });
-  </script>
-</body>
-</html>
