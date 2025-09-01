@@ -13,4 +13,61 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="Merts.html">Merts</a>
-      <a
+      <a href="upload.html">Upload</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <h1>Login</h1>
+
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <p id="message"></p>
+
+  <h3>Or register a new account:</h3>
+  <form id="registerForm">
+    <input type="email" id="regEmail" placeholder="Email" required><br><br>
+    <input type="password" id="regPassword" placeholder="Password" required><br><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
+      authDomain: "merttube-46b68.firebaseapp.com",
+      projectId: "merttube-46b68",
+      storageBucket: "merttube-46b68.appspot.com",
+      messagingSenderId: "274195761415",
+      appId: "1:274195761415:web:PUT_YOUR_WEB_APP_ID_HERE"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const message = document.getElementById('message');
+
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => message.innerText = "Logged in successfully!")
+        .catch(err => message.innerText = err.message);
+    });
+
+    registerForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => message.innerText = "Account created!")
+        .catch(err => message.innerText = err.message);
+    });
+  </script>
+</body>
+</html>
