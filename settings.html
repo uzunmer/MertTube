@@ -13,6 +13,7 @@
       <a href="Merts.html">Merts</a>
       <a href="upload.html">Upload</a>
       <a href="login.html">Login</a>
+      <a href="settings.html">Settings</a>
     </nav>
   </header>
 
@@ -21,16 +22,13 @@
 
     <div class="theme-switch">
       <label>
-        <input type="radio" name="theme" value="system" checked>
-        System Default
+        <input type="radio" name="theme" value="system" checked> System Default
       </label><br>
       <label>
-        <input type="radio" name="theme" value="light">
-        Light Mode
+        <input type="radio" name="theme" value="light"> Light Mode
       </label><br>
       <label>
-        <input type="radio" name="theme" value="dark">
-        Dark Mode
+        <input type="radio" name="theme" value="dark"> Dark Mode
       </label>
       <p id="themeMsg">Currently using system default</p>
     </div>
@@ -40,32 +38,20 @@
     const themeRadios = document.querySelectorAll('input[name="theme"]');
     const themeMsg = document.getElementById('themeMsg');
 
-    // Detect system preference
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    // Load saved preference
-    let saved = localStorage.getItem('themeMode') || 'system';
-
-    function applyTheme(mode) {
-      document.body.classList.remove('dark-mode');
-      if(mode === 'system') {
-        if(prefersDark) document.body.classList.add('dark-mode');
-        themeMsg.innerText = "Currently using system default";
-      } else if(mode === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeMsg.innerText = "Dark mode enabled";
-      } else if(mode === 'light') {
-        themeMsg.innerText = "Light mode enabled";
-      }
-      localStorage.setItem('themeMode', mode);
-    }
-
     // Apply saved theme
-    applyTheme(saved);
+    let saved = localStorage.getItem('themeMode') || 'system';
+    document.body.classList.remove('light-mode','dark-mode');
+    if(saved==='light') document.body.classList.add('light-mode');
+    if(saved==='dark') document.body.classList.add('dark-mode');
+
     themeRadios.forEach(radio => {
       if(radio.value === saved) radio.checked = true;
       radio.addEventListener('change', () => {
-        applyTheme(radio.value);
+        document.body.classList.remove('light-mode','dark-mode');
+        if(radio.value==='light') document.body.classList.add('light-mode');
+        if(radio.value==='dark') document.body.classList.add('dark-mode');
+        localStorage.setItem('themeMode', radio.value);
+        themeMsg.innerText = radio.value==='system' ? "Using system default" : radio.value.charAt(0).toUpperCase() + radio.value.slice(1)+" mode enabled";
       });
     });
   </script>
