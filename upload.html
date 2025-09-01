@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>Upload - MertTube</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <header>
@@ -13,18 +11,27 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="Merts.html">Merts</a>
+      <a href="upload.html">Upload</a>
       <a href="login.html">Login</a>
       <a href="settings.html">Settings</a>
     </nav>
   </header>
 
   <div class="page-container">
-    <h1>Upload a Video</h1>
-    <form id="uploadForm">
-      <input type="text" id="title" placeholder="Video Title" required>
-      <textarea id="description" placeholder="Description"></textarea>
-      <input type="text" id="video_url" placeholder="Video URL (MP4)" required>
-      <label>Is this a Mert? (Short) <input type="checkbox" id="is_short"></label><br><br>
-      <button type="submit">Upload</button>
-    </form>
-    <p id="message
+    <h1>Upload Video</h1>
+    <input type="text" placeholder="Title" id="title"><br>
+    <textarea placeholder="Description" id="desc"></textarea><br>
+    <input type="text" placeholder="Video URL" id="url"><br>
+    <button onclick="alert('Upload simulated for demo!')">Upload</button>
+  </div>
+
+  <script>
+    const savedTheme = localStorage.getItem('themeMode');
+    if(savedTheme){
+      document.body.classList.remove('light-mode','dark-mode');
+      if(savedTheme==='light') document.body.classList.add('light-mode');
+      if(savedTheme==='dark') document.body.classList.add('dark-mode');
+    }
+  </script>
+</body>
+</html>
