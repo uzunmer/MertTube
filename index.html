@@ -1,76 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MertTube Final</title>
+  <title>MertTube</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 1000px; margin: auto; background: #f4f4f4; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #222; color: white; }
-    nav a { color: white; margin-left: 15px; text-decoration: none; }
-    .video-card { background: white; padding: 15px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    h1 { text-align: center; margin-top: 20px; }
-    .ads { background: #ddd; text-align: center; padding: 10px; margin: 10px 0; }
+    body { font-family: Arial; max-width: 900px; margin: auto; background: #f4f4f4; padding: 20px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    nav a { margin-left: 15px; text-decoration: none; color: #333; font-weight: bold; }
+    .ads { background: #ddd; text-align: center; padding: 10px; margin: 10px 0; border-radius: 8px; }
     .shorts { display: flex; overflow-x: auto; margin-bottom: 20px; }
     .short-card { min-width: 200px; margin-right: 10px; background: white; padding: 10px; border-radius: 8px; }
-    .short-card video { width: 100%; }
+    .video-card { background: white; padding: 15px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
   </style>
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <header>
+    <div><strong>MertTube</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upload.html">Upload</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
 
-<header>
-  <div><strong>MertTube</strong></div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="upload.html">Upload</a>
-    <a href="login.html">Login</a>
-  </nav>
-</header>
+  <h1>Welcome to MertTube</h1>
 
-<h1>Welcome to MertTube</h1>
+  <div class="ads">Ad Placeholder</div>
 
-<div class="ads">Ad Placeholder</div>
+  <h3>Shorts</h3>
+  <div class="shorts" id="shorts">
+    <!-- Shorts videos will appear here -->
+  </div>
 
-<div class="shorts" id="shorts"></div>
+  <h3>All Videos</h3>
+  <div id="videos">
+    <!-- Video feed will appear here -->
+  </div>
 
-<div id="videos"></div>
+  <div class="ads">Ad Placeholder</div>
 
-<div class="ads">Ad Placeholder</div>
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-<script>
-  fetch('videos.json')
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById('videos');
-      const shortsContainer = document.getElementById('shorts');
+    const videosContainer = document.getElementById('videos');
+    const shortsContainer = document.getElementById('shorts');
 
-      data.forEach(video => {
-        // Video Feed
-        const el = document.createElement('div');
-        el.className = "video-card";
-        el.innerHTML = `
-          <h2>${video.title}</h2>
-          <p>${video.description}</p>
-          <video width="640" controls>
-            <source src="${video.video_url}" type="video/mp4">
-          </video>
-        `;
-        container.appendChild(el);
+    // Fetch videos from Firestore
+    db.collection("videos").orderBy("upload_time", "desc").get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const video = doc.data();
 
-        // Shorts Section (videos <2 min)
-        const uploadDate = new Date(video.upload_time);
-        if(video.short) { // you can mark shorts in JSON with "short": true
-          const shortEl = document.createElement('div');
-          shortEl.className = "short-card";
-          shortEl.innerHTML = `
-            <h4>${video.title}</h4>
-            <video controls>
+          // Add to All Videos feed
+          const el = document.createElement('div');
+          el.className = "video-card";
+          el.innerHTML = `
+            <h2>${video.title}</h2>
+            <p>${video.description}</p>
+            <video width="640" controls>
               <source src="${video.video_url}" type="video/mp4">
             </video>
+            <hr>
           `;
-          shortsContainer.appendChild(shortEl);
-        }
-      });
-    });
-</script>
+          videosContainer.appendChild(el);
 
+          // Optionally add to Shorts section
+          if(video.short){
+            const shortEl = document.createElement('div');
+            shortEl.className = "short-card";
+            shortEl.innerHTML = `
+              <h4>${video.title}</h4>
+              <video width="200" controls>
+                <source src="${video.video_url}" type="video/mp4">
+              </video>
+            `;
+            shortsContainer.appendChild(shortEl);
+          }
+        });
+      })
+      .catch(err => console.error(err));
+  </script>
 </body>
 </html>
