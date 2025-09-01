@@ -32,19 +32,14 @@
   <div class="ads">Ad Placeholder</div>
 
   <h3>Shorts</h3>
-  <div class="shorts" id="shorts">
-    <!-- Shorts videos will appear here -->
-  </div>
+  <div class="shorts" id="shorts"></div>
 
   <h3>All Videos</h3>
-  <div id="videos">
-    <!-- Video feed will appear here -->
-  </div>
+  <div id="videos"></div>
 
   <div class="ads">Ad Placeholder</div>
 
   <script>
-    // Firebase config with your project info
     const firebaseConfig = {
       apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
       authDomain: "merttube-46b68.firebaseapp.com",
@@ -59,13 +54,12 @@
     const videosContainer = document.getElementById('videos');
     const shortsContainer = document.getElementById('shorts');
 
-    // Fetch videos from Firestore
     db.collection("videos").orderBy("upload_time", "desc").get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           const video = doc.data();
 
-          // Add to All Videos feed
+          // All videos
           const el = document.createElement('div');
           el.className = "video-card";
           el.innerHTML = `
@@ -78,7 +72,7 @@
           `;
           videosContainer.appendChild(el);
 
-          // Add to Shorts section if short: true
+          // Shorts
           if(video.short){
             const shortEl = document.createElement('div');
             shortEl.className = "short-card";
