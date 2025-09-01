@@ -1,49 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Login - MertTube</title>
-</head>
-<body>
-  <h1>Login or Register</h1>
-
-  <input type="email" id="email" placeholder="Email"><br><br>
-  <input type="password" id="password" placeholder="Password"><br><br>
-
-  <button id="loginBtn">Login</button>
-  <button id="registerBtn">Register</button>
-
-  <p id="message"></p>
-
+  <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyD0zRu_CX84HZzalQXxP7pYM3YBWhF88rc",
-      authDomain: "merttube-46b68.firebaseapp.com",
-      projectId: "merttube-46b68",
-      storageBucket: "merttube-46b68.appspot.com",
-      messagingSenderId: "274195761415",
-      appId: "1:274195761415:web:PUT_YOUR_WEB_APP_ID_HERE"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const message = document.getElementById('message');
-
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
-        .then(() => message.innerText = "Logged in successfully!")
-        .catch(err => message.innerText = err.message);
-    });
-
-    document.getElementById('registerBtn').addEventListener('click', () => {
-      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
-        .then(() => message.innerText = "Registered and logged in!")
-        .catch(err => message.innerText = err.message);
-    });
-  </script>
-</body>
-</html>
+</head>
+<body>
+  <header>
+    <div><strong>Login</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Merts.html">Merts</a>
+      <a
