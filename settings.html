@@ -16,30 +16,45 @@
     </nav>
   </header>
 
-  <h1>Settings</h1>
+  <div class="page-container">
+    <h1>Settings</h1>
 
-  <div>
-    <label>
-      <input type="checkbox" id="darkModeToggle"> Dark Mode
-    </label>
+    <div class="theme-switch">
+      <label>
+        <input type="checkbox" id="darkModeToggle">
+        Dark Mode
+      </label>
+      <p id="systemPrefMsg">Using system preference by default</p>
+    </div>
   </div>
 
   <script>
     const toggle = document.getElementById('darkModeToggle');
+    const msg = document.getElementById('systemPrefMsg');
+
+    // Detect system preference
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     // Load saved preference
-    if(localStorage.getItem('darkMode') === 'true') {
+    let saved = localStorage.getItem('darkMode');
+    if(saved === null) {
+      // No manual override, follow system
+      if(prefersDark) document.body.classList.add('dark-mode');
+    } else if(saved === 'true') {
       document.body.classList.add('dark-mode');
       toggle.checked = true;
+      msg.innerText = "Manual override enabled";
     }
 
     toggle.addEventListener('change', () => {
       if(toggle.checked) {
         document.body.classList.add('dark-mode');
         localStorage.setItem('darkMode','true');
+        msg.innerText = "Manual override enabled";
       } else {
         document.body.classList.remove('dark-mode');
         localStorage.setItem('darkMode','false');
+        msg.innerText = "Manual override disabled (using system preference)";
       }
     });
   </script>
